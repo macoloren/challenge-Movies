@@ -8,8 +8,16 @@ module.exports = async () => {
 
   try {
     await sequelize.authenticate();
-    sequelize.sync({ alter: true}) //crea las tablas en la db automaticamente
+    sequelize.sync({ alter: false }) //crea las tablas en la db automaticamente
+
+    require('../models/characters');
+    require('../models/movies');
+    require('../models/contentTypes');
+    require('../models/genderTypes');
+
     console.log('DB loaded and connected');
+
+
 
     const server = new ExpressServer();
     console.log('Express Loaded');

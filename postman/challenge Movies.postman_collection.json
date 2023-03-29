@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f885a18c-0ffc-48b0-9db5-9ffcedc9c87f",
-		"name": "Users Tests",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "b39f60c4-8c1a-4afb-b5b5-ae39f7168f56",
+		"name": "challenge Movies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21636292"
 	},
 	"item": [
 		{
@@ -48,10 +49,17 @@
 					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NTA4NzM1LCJleHAiOjE2Nzk1OTUxMzV9.15POm6CaxDfibgLXWtOULpTtMDQ0WwpEXqtjol1fvYA",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"fervaldes11@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\": \"test3@gmail.com\",\r\n    \"password\": \"zxcv1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,13 +67,84 @@
 							}
 						},
 						"url": {
-							"raw": "{{basepath}}/auth/login",
+							"raw": "http://localhost:3000/api/v1/auth/login",
+							"protocol": "http",
 							"host": [
-								"{{basepath}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is not 500\", function () {\r",
+									"    pm.response.to.not.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response is json\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response have correct properties\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    console.log(jsonData);\r",
+									"    pm.expect(jsonData).to.have.property('data');\r",
+									"    pm.expect(jsonData.data).to.have.property('token');\r",
+									"    pm.expect(jsonData.data.token).to.be.an('string');\r",
+									"    pm.expect(jsonData.data).to.have.property('user');\r",
+									"    pm.expect(jsonData.data).to.have.property('role');\r",
+									"\r",
+									"    pm.collectionVariables.set(\"token\", jsonData.data.token);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"maco26\",\r\n    \"email\": \"maco26@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
 							]
 						}
 					},
@@ -231,43 +310,35 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{token}}",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NTA0OTcyLCJleHAiOjE2Nzk1OTEzNzJ9.NOEqC-hddP6s0b-8ujaHQYoFX0R8PACytiqxNRMzri8",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{basepath}}/users?filter[name]=Fernando&filter[email]=fervaldes11@gmail.com&options[limit]=10&options[offset]=0&filter[lastName]=Valdes",
+							"raw": "http://localhost:3000/api/v1/users",
+							"protocol": "http",
 							"host": [
-								"{{basepath}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"users"
-							],
-							"query": [
-								{
-									"key": "filter[name]",
-									"value": "Fernando"
-								},
-								{
-									"key": "filter[email]",
-									"value": "fervaldes11@gmail.com"
-								},
-								{
-									"key": "options[limit]",
-									"value": "10"
-								},
-								{
-									"key": "options[offset]",
-									"value": "0"
-								},
-								{
-									"key": "filter[lastName]",
-									"value": "Valdes"
-								}
 							]
 						}
 					},
@@ -399,13 +470,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{token}}",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjc4MzEwOTkzLCJleHAiOjE2NzgzOTczOTN9.CVyarkkKDWpqJNdw_RkZjEqjt_2PgihmCvrxOFCd3cY",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Fernando3\",\r\n    \"lastName\": \"Valdes\",\r\n    \"email\": \"{{randomNumber}}@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"birthdate\": \"03/31/1975\",\r\n    \"role\": \"USER_ROLE\"\r\n}",
+							"raw": "{\r\n    \"name\": \"test4\",\r\n    \"email\": \"test4@gmail.com\",\r\n    \"password\": \"zxcv1234\",\r\n    \"role\": \"ADMIN_ROLE\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -413,11 +484,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{basepath}}/users",
+							"raw": "http://localhost:3000/api/v1/users",
+							"protocol": "http",
 							"host": [
-								"{{basepath}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"users"
 							]
 						}
@@ -530,8 +605,8 @@
 									"    pm.expect(jsonData).to.have.property('data');\r",
 									"    pm.expect(jsonData.data).to.have.property('email');\r",
 									"    pm.expect(jsonData.data.email).to.be.an('string');\r",
-									"    pm.expect(jsonData.data).to.have.property('_id');\r",
-									"    pm.expect(jsonData.data._id).to.be.an('string');\r",
+									"    pm.expect(jsonData.data).to.have.property('id');\r",
+									"    pm.expect(jsonData.data.id).to.be.an('number');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -558,7 +633,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Luis\"\r\n}",
+							"raw": "{\r\n    \"name\": \"MOZOTE\",\r\n    \"enable\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -566,19 +641,17 @@
 							}
 						},
 						"url": {
-							"raw": "{{basepath}}/users/:id",
+							"raw": "http://localhost:3000/api/v1/users/3",
+							"protocol": "http",
 							"host": [
-								"{{basepath}}"
+								"localhost"
 							],
+							"port": "3000",
 							"path": [
+								"api",
+								"v1",
 								"users",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "{{userId}}"
-								}
+								"3"
 							]
 						}
 					},
@@ -809,6 +882,452 @@
 									"key": "id",
 									"value": "abc123"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "save Movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5OTQyMzk4LCJleHAiOjE2ODAwMjg3OTh9.fYGKS8giIQSEunDsHyeNeNCtKCUDajDNttDrJ8nn4T8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"vengadores\",\r\n    \"creationDate\": \"03/03/2003\",\r\n    \"calification\": 10,\r\n    \"genderType\": \"ADVENTURE\",\r\n    \"contentType\": \"MOVIE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Movie",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5Njc4NjUwLCJleHAiOjE2Nzk3NjUwNTB9.QRx5CvgLbcldhIabNojUIG_PM501jl1vlVExZH-V24s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"ALGO MAS 1\",\r\n    \"creationDate\": \"04/04/2004\",\r\n    \"calification\": 10,\r\n    \"genderType\": \"COMEDY\",\r\n    \"contentType\": \"SERYE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/movies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5OTQyMzk4LCJleHAiOjE2ODAwMjg3OTh9.fYGKS8giIQSEunDsHyeNeNCtKCUDajDNttDrJ8nn4T8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"otra pelicula\",\r\n    \"creationDate\": \"04/04/2004\",\r\n    \"calification\": 12,\r\n    \"genderTypeId\": \"asd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/movies/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllMovies",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjgwMDI4ODgzLCJleHAiOjE2ODAxMTUyODN9.8axJNSsMNI5iyuvC31ccq2gw3eVl3LNTSWCCek11LC0",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/movies?filter[title]=ALGO&filter[calification]=10&filter[creationDate]=03/03/2003&options[offset]=0&options[limit]=10&options[order]=title;DESC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"movies"
+							],
+							"query": [
+								{
+									"key": "filter[title]",
+									"value": "ALGO"
+								},
+								{
+									"key": "filter[calification]",
+									"value": "10"
+								},
+								{
+									"key": "filter[creationDate]",
+									"value": "03/03/2003"
+								},
+								{
+									"key": "options[offset]",
+									"value": "0"
+								},
+								{
+									"key": "options[limit]",
+									"value": "10"
+								},
+								{
+									"key": "options[order]",
+									"value": "title;DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NTA4NzM1LCJleHAiOjE2Nzk1OTUxMzV9.15POm6CaxDfibgLXWtOULpTtMDQ0WwpEXqtjol1fvYA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"otra pelicula\",\r\n    \"creationDate\": \"04/04/2004\",\r\n    \"calification\": 12,\r\n    \"genderTypeId\": \"asd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/movies/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"movies",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "characters",
+			"item": [
+				{
+					"name": "save character",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NTA4NzM1LCJleHAiOjE2Nzk1OTUxMzV9.15POm6CaxDfibgLXWtOULpTtMDQ0WwpEXqtjol1fvYA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"kdkdkd\",\r\n    \"age\": 24,\r\n    \"history\": \"one history from \",\r\n    \"weight\": 24\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/characters",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"characters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update character",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NDE0Njk1LCJleHAiOjE2Nzk1MDEwOTV9.6VjLH-oPmbs9YXADD6GNzVjsMmb31rsXQAMSxJXtByo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/characters/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"characters",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NDE0Njk1LCJleHAiOjE2Nzk1MDEwOTV9.6VjLH-oPmbs9YXADD6GNzVjsMmb31rsXQAMSxJXtByo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/characters/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"characters",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCharacters",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjgwMDI4ODgzLCJleHAiOjE2ODAxMTUyODN9.8axJNSsMNI5iyuvC31ccq2gw3eVl3LNTSWCCek11LC0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/characters?filter[name]=o",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"characters"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "o"
+								},
+								{
+									"key": "filter[age]",
+									"value": "30",
+									"disabled": true
+								},
+								{
+									"key": "filter[weight]",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "options[offset]",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "options[limit]",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteById",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjc5NDE0Njk1LCJleHAiOjE2Nzk1MDEwOTV9.6VjLH-oPmbs9YXADD6GNzVjsMmb31rsXQAMSxJXtByo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/characters/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"characters",
+								"6"
 							]
 						}
 					},

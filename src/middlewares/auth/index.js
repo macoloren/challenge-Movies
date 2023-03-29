@@ -3,7 +3,7 @@ const {validationResult} = require('../commons');
 const { validToken, validRole } = require('../../services/authService');
 
 
-//TODO: validando los campos de 
+//TODO: validando los campos de Login POST
 const _nameRequired = check('name', 'Name required').not().isEmpty();
 const _emailRequired = check('email', 'Email required').not().isEmpty();
 const _emailValid = check('email', 'Email is invalid').isEmail();
