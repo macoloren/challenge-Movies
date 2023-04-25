@@ -2,8 +2,8 @@ const express = require('express');
 const characterService = require('../services/characterService');
 const Success = require('../handlers/successHandler');
 const logger = require('../loaders/logger');
-const CharacterRepository = require('../repositories/characterRepository');
 
+const imageService = require('../services/imageService');
 /**
  * 
  * @param {express.Request} req 
@@ -91,10 +91,29 @@ const deleteCharacter = async (req, res, next) => {
     }
 };
 
+
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * metodo para las imagenes que se suben AWS de characters
+ */
+const uploadCharacterImage = async (req, res, next) => {
+    try {
+        const characterId = req.body.id;
+        const image = req.file;
+
+        res.json(new Success(await imageService.uploadCharacterImage(characterId, image)));
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     getAllCharacters,
     createCharacter,
     updateCharacter,
     getById,
-    deleteCharacter
+    deleteCharacter,
+    uploadCharacterImage
 }

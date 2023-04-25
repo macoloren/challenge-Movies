@@ -1,10 +1,13 @@
 const { Router } = require('express');
+const multer = require('multer');
+const upload = multer();
 const {
     getAllCharacters, 
     createCharacter, 
     updateCharacter, 
     getById, 
-    deleteCharacter
+    deleteCharacter,
+    uploadCharacterImage
 } = require('../controllers/characters');
 
 const { 
@@ -23,5 +26,5 @@ router.post('/', postRequestValidations, createCharacter);
 router.put('/:id', putRequestValidations, updateCharacter);
 router.get('/:id', getRequestValidation, getById);
 router.delete('/:id', deleteRequestValidations, deleteCharacter);
-
+router.post('/image', upload.single('image'), uploadCharacterImage);
 module.exports = router;

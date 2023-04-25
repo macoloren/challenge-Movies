@@ -28,8 +28,15 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         dialect : process.env.DATABASE_DIALECT
     },
+    //TODO: VARIABLES DE ENTORNO PARA AUTENTICACION
     auth: {
         secret: process.env.AUTH_SECRET,
         ttl: process.env.AUTH_TTL
+    },
+    //TODO: VARIABLES DE ENTORNO PARA AWS SERVICIO S3, PERSISTENCIA DE IMAGENES
+    aws: {
+        accessKeyId : process.env.AWS_ACCESS_KEY_ID,
+        privateAccessKey : process.env.AWS_PRIVATE_ACCESS_KEY,
+        s3BucketName : process.env.AWS_S3_BUCKET_NAME
     }
-}
+};
