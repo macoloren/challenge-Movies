@@ -9,7 +9,7 @@ class CharacterRepository {
 
     };
 
-    
+
     //TODO: FALTA IMPLEMENTAR FILTRO MOVIE TITLE
     //*LISTAR TODA LA DB
     async findAll({ name, age, weight, movieTitle }, { limit, offset, order }) {
@@ -33,12 +33,10 @@ class CharacterRepository {
             }
         };
 
-        // if (movieTitle) {
-        //     where.movieTitle = {
-        //         [Op.eq]: movieTitle
-        //     }
-        // };
-        return await Character.findAll({where});
+        return await Character.findAll({
+            where,
+            attributes: ['name', 'image']
+        });
     };
 
 

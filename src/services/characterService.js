@@ -1,6 +1,9 @@
 const CharacterRepository = require('../repositories/characterRepository');
 const repository = new CharacterRepository();
 
+const ImageRepository = require('../repositories/imageRepository');
+const imageRepository = new ImageRepository();
+
 
 //*FILTRAR POR ID
 const findById = async (id) => {
@@ -35,6 +38,8 @@ const update = async (id, character) => {
 
 //*ELIMINAR UN REGISTRO
 const remove = async (id) => {
+    const character = await repository.findById(id)
+    imageRepository.deleteImage(character.image);
     return await repository.remove(id);
 };
 

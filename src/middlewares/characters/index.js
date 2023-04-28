@@ -1,13 +1,15 @@
 const { check } = require('express-validator');
 const AppError = require('../../errors/appError');
 const characterService = require('../../services/characterService');
-const { ROLES, ADMIN_ROLE } = require('../../constants');
+const { ROLES, ADMIN_ROLE, USER_ROLE } = require('../../constants');
 const logger = require('../../loaders/logger');
-const {validationResult} = require('../commons');
+const {validationResult, imageRequired:_imageRequired} = require('../commons');
 const { validJWT, hasRole } = require('../auth');
+const multer = require('multer');
+const upload = multer();
+
 
 const _nameRequired = check('name', 'Name required').not().isEmpty();
-const _optionalEmailValid = check('email', 'Email is invalid').optional().isEmail();
 
 
 //*VALIDAR SI PASAR EL ROLE EN EL BODY (REQUEST)
@@ -32,7 +34,7 @@ const _idExist = check('id').custom(
     }
 );
 
-
+//*campos del request
 const _ageIsNumeric = check('age').isNumeric().optional();
 const _weightIsNumeric = check('weight').isNumeric().optional();
 const _historyRequired = check('history').not().isEmpty();
@@ -47,6 +49,9 @@ const _nameNotExist = check('name').custom(
     }
 );
 
+
+//*usando multer para la image
+const uploadImage = upload.single('image')
 
 
 //TODO: validacion para metodo POST 
@@ -99,10 +104,23 @@ const getRequestValidation = [
     validationResult
 ]
 
+//TODO: validacion para imagenes
+const postImageRequestValidations = [
+    validJWT,
+    hasRole(USER_ROLE, ADMIN_ROLE),
+    uploadImage,
+    _idRequied,
+    _idIsNumeric,
+    _idExist,
+    _imageRequired,
+    validationResult
+]
+
 module.exports = {
     postRequestValidations,
     putRequestValidations,
     getAllRequestValidation,
     getRequestValidation,
-    deleteRequestValidations
+    deleteRequestValidations,
+    postImageRequestValidations
 }

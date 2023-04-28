@@ -10,17 +10,11 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ktufernando/node-06-restserver.git"
-  },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ktufernando/node-06-restserver/issues"
-  },
-  "homepage": "https://github.com/ktufernando/node-06-restserver#readme",
+  
   "lint-staged": {
     "*.{js,json}": [
       "prettier --write",

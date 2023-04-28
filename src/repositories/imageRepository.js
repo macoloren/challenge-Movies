@@ -37,8 +37,8 @@ class ImageRepository {
     
 
     //(configuracion) metodo para eliminar la img existente en aws y sobreponer una nueva
-    deleteImage(name, type) {
-        const Key = `${name}.${type.split('/')[1]}`; //agregando la extencion a las imagenes (jpj,pgn, etc..)
+    deleteImage(Key) {
+        Key = Key.split('/')[3]
         return new Promise((resolve, reject) => {
             const params = {
                 Bucket: config.aws.s3BucketName,

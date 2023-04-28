@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const {validationResult} = require('../commons');
+const { validationResult } = require('../commons');
 const { validToken, validRole } = require('../../services/authService');
 
 

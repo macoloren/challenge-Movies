@@ -3,10 +3,12 @@ const AppError = require('../../errors/appError');
 const movieService = require('../../services/movieService');
 const contentTypeService = require('../../services/contentTypeService');
 const genderTypeService = require('../../services/genderTypeService');
-const { ROLES, ADMIN_ROLE } = require('../../constants');
+const { ROLES, ADMIN_ROLE, USER_ROLE } = require('../../constants');
 const logger = require('../../loaders/logger');
-const {validationResult} = require('../commons');
+const {validationResult, imageRequired:_imageRequired} = require('../commons');
 const { validJWT, hasRole } = require('../auth');
+const multer = require('multer');
+const upload = multer();
 
 
 const _idRequied = check('id').not().isEmpty();
@@ -124,6 +126,9 @@ const getAllRequestValidation = [
     validJWT
 ]
 
+//*usando multer para la image
+const uploadImage = upload.single('image')
+
 // //TODO: validacion para metodo GET_ONE
 const getRequestValidation = [
     validJWT,
@@ -133,10 +138,22 @@ const getRequestValidation = [
     validationResult
 ]
 
+const postImageRequestValidations = [
+    validJWT,
+    hasRole(USER_ROLE, ADMIN_ROLE),
+    uploadImage,
+    _idRequied,
+    _idIsNumeric,
+    _idExist,
+    _imageRequired,
+    validationResult
+]
+
 module.exports = {
     postRequestValidations,
     putRequestValidations,
     getAllRequestValidation,
     getRequestValidation,
-    deleteRequestValidations
+    deleteRequestValidations,
+    postImageRequestValidations
 }

@@ -15,8 +15,9 @@ const {
     putRequestValidations,
     getAllRequestValidation,
     getRequestValidation,
-    deleteRequestValidations
-} = require('../middlewares/Characters');
+    deleteRequestValidations,
+    postImageRequestValidations
+} = require('../middlewares/characters');
 
 
 const router = Router();
@@ -26,5 +27,5 @@ router.post('/', postRequestValidations, createCharacter);
 router.put('/:id', putRequestValidations, updateCharacter);
 router.get('/:id', getRequestValidation, getById);
 router.delete('/:id', deleteRequestValidations, deleteCharacter);
-router.post('/image', upload.single('image'), uploadCharacterImage);
+router.post('/image', postImageRequestValidations, uploadCharacterImage);
 module.exports = router;
