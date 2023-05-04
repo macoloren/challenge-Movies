@@ -47,10 +47,10 @@ class ExpressServer {
             );
         });
 
-        this.app.use(this.basePathAuth, require('../../routes/auth'));
-        this.app.use(this.basePathUser, require('../../routes/users'));
-        this.app.use(this.basePathCharacter, require('../../routes/characters'));
-        this.app.use(this.basePathMovie, require('../../routes/movies'));
+        this.app.use(this.basePathAuth, require('../../routes/auth.routes'));
+        this.app.use(this.basePathUser, require('../../routes/users.routes'));
+        this.app.use(this.basePathCharacter, require('../../routes/characters.routes'));
+        this.app.use(this.basePathMovie, require('../../routes/movies.routes'));
 
     }
 

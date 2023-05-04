@@ -5,15 +5,17 @@ const {
     updateMovie, 
     getById, 
     deleteMovie,
-    uploadMovieImage
-} = require('../controllers/movies');
+    uploadMovieImage,
+    asocieteMovie
+} = require('../controllers/movies.controller');
 const { 
     postRequestValidations,
     putRequestValidations,
     getAllRequestValidation,
     getRequestValidation,
     deleteRequestValidations,
-    postImageRequestValidations
+    postImageRequestValidations,
+    asociationRequestValidations
 } = require('../middlewares/movies');
 
 
@@ -25,5 +27,6 @@ router.put('/:id', putRequestValidations, updateMovie);
 router.get('/:id', getRequestValidation, getById);
 router.delete('/:id', deleteRequestValidations, deleteMovie);
 router.post('/image', postImageRequestValidations, uploadMovieImage);
+router.put('/:idMovie/characters/:idCharacter', asociationRequestValidations, asocieteMovie);
 
 module.exports = router;

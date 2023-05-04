@@ -30,7 +30,7 @@ module.exports = Movie
 //*RELACION CHARACTERS Y MOVIES MUCHOS A MUCHOS
 Movie.belongsToMany(require('./characters'), {
   through: "characterMovies",
-  as:"character",
+  as:"characters",
   foreignKey: "movieId"
 });
 

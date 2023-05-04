@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const Movie = require('../models/movies');
+const Character = require('../models/characters');
 
 
 //!METODOS PARA HACER LAS CONSULTAS A LA DATA BASE
@@ -53,6 +54,19 @@ class MovieRepository {
     }
 
 
+    //*asociacion metodo
+    async findByIdWhitCharacters(id) {
+        return await Movie.findByPk(id, {
+            include: [
+                {
+                    model: Character,
+                    as: "characters",
+                }
+            ]
+        });
+    };
+
+
     //*BUSQUEDA POR CAMPO TITLE
     async findByTitle(title) {
         return await Movie.findOne({ where: { title } });
@@ -84,5 +98,4 @@ class MovieRepository {
         });
     };
 };
-
 module.exports = MovieRepository;

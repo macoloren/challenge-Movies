@@ -8,7 +8,7 @@ const {
     getById, 
     deleteCharacter,
     uploadCharacterImage
-} = require('../controllers/characters');
+} = require('../controllers/characters.controller');
 
 const { 
     postRequestValidations,

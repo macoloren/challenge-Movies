@@ -5,7 +5,7 @@ const {
     updateUser, 
     getById, 
     deleteUser
-} = require('../controllers/users');
+} = require('../controllers/users.controller');
 const { 
     postRequestValidations,
     putRequestValidations,
@@ -22,5 +22,7 @@ router.post('/', postRequestValidations, createUser);
 router.put('/:id', putRequestValidations, updateUser);
 router.get('/:id', getRequestValidation, getById);
 router.delete('/:id', deleteRequestValidations, deleteUser);
+
+
 
 module.exports = router;

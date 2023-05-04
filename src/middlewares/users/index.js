@@ -41,7 +41,7 @@ const _roleValid = check('role').optional().custom(
 
 
 const _idRequied = check('id').not().isEmpty();
-const _idIsNumeric = check('id').isMongoId();
+const _idIsNumeric = check('id').isNumeric();
 const _idExist = check('id').custom(
     async (id = '') => {
         const userFound = await userService.findById(id);
