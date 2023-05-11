@@ -7,7 +7,7 @@ const imageRepository = new ImageRepository();
 
 //*FILTRAR POR ID
 const findById = async (id) => {
-    return await repository.findById(id);
+    return await repository.findByIdWhitMovies(id);
 };
 
 

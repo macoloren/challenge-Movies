@@ -54,15 +54,15 @@ class MovieRepository {
     }
 
 
-    //*asociacion metodo
+    //*metodo asociacion de chracters a movies
     async findByIdWhitCharacters(id) {
         return await Movie.findByPk(id, {
             include: [
-                {
-                    model: Character,
-                    as: "characters",
-                }
-            ]
+                'characters',
+                'gender',
+                'type'
+            ],
+            attributes: ['id','title','image', 'creationDate', 'calification']
         });
     };
 
@@ -96,6 +96,6 @@ class MovieRepository {
                 id
             }
         });
-    };
+    }; 
 };
 module.exports = MovieRepository;

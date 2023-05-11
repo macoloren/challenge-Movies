@@ -18,7 +18,7 @@ const uploadCharacterImage = async (idCharacter, file) => {
     }
     const imageURL = await imageRepository.uploadImage(character.name, file.buffer, file.mimetype);
     
-    character.image = imageURL
+    character.image = imageURL;
     return await characterRepository.update(idCharacter, {image: imageURL});
 };
 

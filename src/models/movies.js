@@ -27,6 +27,7 @@ const Movie = sequelize.define('Movie', {
 
 module.exports = Movie
 
+
 //*RELACION CHARACTERS Y MOVIES MUCHOS A MUCHOS
 Movie.belongsToMany(require('./characters'), {
   through: "characterMovies",
@@ -36,11 +37,13 @@ Movie.belongsToMany(require('./characters'), {
 
 Movie.belongsTo(require('./contentTypes'), {
   foreignKey: "contentTypeId",
-  targetKey: "id"
+  targetKey: "id",
+  as: 'type'
 });
 
 Movie.belongsTo(require('./genderTypes'), {
   foreignKey: "genderTypeId",
-  targetKey: "id"
+  targetKey: "id",
+  as: 'gender'
 });
 

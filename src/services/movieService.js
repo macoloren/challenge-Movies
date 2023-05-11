@@ -1,9 +1,6 @@
 const MovieRepository = require('../repositories/movieRepository');
 const repository = new MovieRepository();
 
-const CharacterRepository = require('../repositories/characterRepository');
-const characterRepository = new CharacterRepository();
-
 const GenderTypeRepository = require('../repositories/genderTypeRepository');
 const genderTypeRepository = new GenderTypeRepository();
 
@@ -16,15 +13,13 @@ const findById = async (id) => {
     return await repository.findByIdWhitCharacters(id);
 };
 
-
 //*FILTRAR POR TITLE
 const findByTitle = async (title) => {
     return await repository.findByTitle(title);
 };
 
-
+//*metodo para filtrar la db (consultas por filtros paginacion)
 const findAll = async (filter, options) => {
-    // return await repository.findAllWithPagination(filter, options);
     return await repository.findAll(filter, options);
 };
 
@@ -41,16 +36,15 @@ const save = async (movie) => {
 // //*ACTUALIZANDO MOVIE
 const update = async (id, movie) => {
     //PERSISTIENDO EL genderType en la tabla movie
-    if(movie.genderType || movie.contentType){
+    if (movie.genderType || movie.contentType) {
         const genderType = await genderTypeRepository.findByDescription(movie.genderType);
         const contentType = await contentTypeRepository.findByDescription(movie.contentType)
         movie.genderTypeId = genderType.id;
         movie.contentTypeId = contentType.id;
     };
-    
+
     return await repository.update(id, movie);
 };
-
 
 // //*ELIMINAR UN REGISTRO
 const remove = async (id) => {

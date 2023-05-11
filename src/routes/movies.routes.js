@@ -6,7 +6,7 @@ const {
     getById, 
     deleteMovie,
     uploadMovieImage,
-    asocieteMovie
+    asociateCharacter
 } = require('../controllers/movies.controller');
 const { 
     postRequestValidations,
@@ -27,6 +27,6 @@ router.put('/:id', putRequestValidations, updateMovie);
 router.get('/:id', getRequestValidation, getById);
 router.delete('/:id', deleteRequestValidations, deleteMovie);
 router.post('/image', postImageRequestValidations, uploadMovieImage);
-router.put('/:idMovie/characters/:idCharacter', asociationRequestValidations, asocieteMovie);
+router.put('/:idMovie/characters/:idCharacter', asociationRequestValidations, asociateCharacter);
 
 module.exports = router;

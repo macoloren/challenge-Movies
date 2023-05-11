@@ -12,17 +12,6 @@ const multer = require('multer');
 const upload = multer();
 
 
-// const _idRequied = check('id').not().isEmpty();
-// const _idIsNumeric = check('id').isNumeric();
-const _idExist = check('id').custom(
-    async (id = '') => {
-        const userFound = await movieService.findById(id);
-        if (!userFound) {
-            throw new AppError('The id does not exist in DB', 400);
-        }
-    }
-);
-
 const _validationDate = check('creationDate').optional().isDate('MM-DD-YYYY');
 const _creationDate = check('creationDate', 'Creation Date required').not().isEmpty();
 
@@ -44,7 +33,6 @@ const _calificationHigh = check('calification').custom(
         }
     }
 );
-
 
 const _titleOpcional = check('title').optional();
 const _titleRequired = check('title', 'Title required').not().isEmpty();
@@ -77,6 +65,14 @@ const _contentTypeExistAndOpcional = check('contentType').optional().custom(_con
 const _genderTypeExist = check('genderType').custom(_genderTypeExistValidation);
 const _genderTypeExistAndOpcional = check('genderType').optional().custom(_genderTypeExistValidation)
 
+const _idExist = check('id').custom(
+    async (id = '') => {
+        const userFound = await movieService.findById(id);
+        if (!userFound) {
+            throw new AppError('The id does not exist in DB', 400);
+        }
+    }
+);
 
 const _idRequied = (name) => {
     return check(name).not().isEmpty();
@@ -87,9 +83,9 @@ const _idIsNumeric = (name) => {
 };
 
 const _idCharacterExist = check('idCharacter').custom(
-    async (idCharacter = '', {req}) => {
+    async (idCharacter = '', { req }) => {
         const characterFound = await characterService.findById(idCharacter);
-        if(!characterFound) {
+        if (!characterFound) {
             throw new AppError('The character id does not exist in DB', 400);
         }
         req.character = characterFound;
@@ -97,7 +93,7 @@ const _idCharacterExist = check('idCharacter').custom(
 );
 
 const _idMovieExist = check('idMovie').custom(
-    async (idMovie = '', {req}) => {
+    async (idMovie = '', { req }) => {
         const movieFound = await movieService.findById(idMovie);
         if (!movieFound) {
             throw new AppError('The movie id does not exist in DB', 400);
@@ -173,8 +169,8 @@ const postImageRequestValidations = [
     validJWT,
     hasRole(USER_ROLE, ADMIN_ROLE),
     uploadImage,
-    _idRequied,
-    _idIsNumeric,
+    _idRequied('id'),
+    _idIsNumeric('id'),
     _idExist,
     _imageRequired,
     validationResult

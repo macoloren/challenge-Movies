@@ -4,7 +4,7 @@ const AppError = require('../errors/appError');
 const validResult = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        throw new AppError('Validarion Errors', 400, errors.errors);
+        throw new AppError('Validation Errors', 400, errors.errors);
     }
     next();
 }

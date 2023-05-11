@@ -5,7 +5,6 @@ const logger = require('../loaders/logger');
 const imageService = require('../services/imageService')
 
 
-
 /**
  * 
  * @param {express.Request} req 
@@ -105,7 +104,7 @@ const uploadMovieImage = async (req, res, next) => {
     try {
         const movieId = req.body.id;
         const image = req.file;
-
+        console.log('********si llego hasta qui *-******');
         res.json(new Success(await imageService.uploadMovieImage(movieId, image)));
     } catch (err) {
         next(err);
@@ -118,12 +117,12 @@ const uploadMovieImage = async (req, res, next) => {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-const asocieteMovie = async (req, res, next) => {
+const asociateCharacter = async (req, res, next) => {
     try {
-        const character = req.character;
         const movie = req.movie;
-        await movieService.asociate(movie, character);
-
+        const character = req.character;
+        
+        await movieService.asociate(movie, character)
         res.json(new Success());
     } catch (err) {
         next(err);
@@ -138,5 +137,5 @@ module.exports = {
     getById,
     deleteMovie,
     uploadMovieImage,
-    asocieteMovie
+    asociateCharacter
 }
